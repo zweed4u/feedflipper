@@ -39,7 +39,18 @@ class FeedFlip:
                 }
             except:
                 continue
+            self.download(e['enclosure']['@url'], e['title'])
         print(json.dumps(episode_dict, indent=4))
+
+    def download(self, url, title=None):
+        print(f'Downloading {title}...')
+        file_extension = url.split('.')[-1]
+        r = self.session.request('GET', url, stream=True)
+        with open(f'{title}.{file_extension}', 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024): 
+                if chunk:
+                    f.write(chunk)
+        return local_filename
 
 ff = FeedFlip()
 ff.convert('https://itunes.apple.com/us/podcast/kfc-radio/id536209167?mt=2')
