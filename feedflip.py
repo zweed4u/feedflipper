@@ -21,6 +21,7 @@ class FeedFlip:
         base_lookup_query_string['id'] = url_or_id
         response = self.session.request('GET', base_lookup_link, params=base_lookup_query_string)
         rss_url = response.json()['results'][0]['feedUrl']
+        print(f'RSS URL: {rss_url}')
         self.parse_xml(rss_url)
 
     def parse_xml(self, rss_url):
@@ -53,4 +54,5 @@ class FeedFlip:
         return local_filename
 
 ff = FeedFlip()
-ff.convert('https://itunes.apple.com/us/podcast/kfc-radio/id536209167?mt=2')
+#ff.convert('https://itunes.apple.com/us/podcast/kfc-radio/id536209167?mt=2')
+ff.convert('https://itunes.apple.com/us/podcast/hard-factor/id1396058631?mt=2')
